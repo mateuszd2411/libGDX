@@ -2,6 +2,7 @@ package com.mygdx.jumpGame;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -71,7 +72,21 @@ public class JumpGame extends ApplicationAdapter {
 	}
 
     private void update() {
+        handleInput();
 
+
+    }
+
+    private void handleInput() {
+        if (Gdx.input.isKeyPressed(Input.Keys.A)){
+            player.x -= 50 * Gdx.graphics.getDeltaTime();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D)){
+            player.x += 50 * Gdx.graphics.getDeltaTime();
+        }
+        if (Gdx.input.justTouched()){
+            player.jump();
+        }
     }
 
     //clear member after close app
