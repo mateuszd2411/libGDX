@@ -5,11 +5,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Test extends ApplicationAdapter {
+
+	private OrthographicCamera camera;
 
 	private SpriteBatch batch;
 	private Texture texture;
@@ -21,6 +24,7 @@ public class Test extends ApplicationAdapter {
 	public void create () {
 
 		//initialize
+		camera = new OrthographicCamera(800,480);
 		texture = new Texture("1.png");
 		batch = new SpriteBatch();
 		font = new BitmapFont();
@@ -59,6 +63,19 @@ public class Test extends ApplicationAdapter {
 	}
 
     private void update() {
+
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
+		camera.position.set(gameObject1.x + gameObject1.width/2,gameObject1.y + gameObject1.height/2,0);
+
+		if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
+			camera.zoom += 0.02f;
+		}
+
+		if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)){
+			camera.zoom -= 0.02f;
+		}
+
         if (Gdx.input.isKeyPressed(Input.Keys.A)){
 			gameObject1.x -= 500 * Gdx.graphics.getDeltaTime();
         }
@@ -76,9 +93,9 @@ public class Test extends ApplicationAdapter {
 		}
 
 		timeHelper += Gdx.graphics.getDeltaTime();
-		if (timeHelper > 1){
-            System.out.println("test");
-            timeHelper = 0;
+		if (timeHelper > 0.02f){
+			camera.rotate(0.20f);
+			timeHelper = 0;
         }
 
     }
