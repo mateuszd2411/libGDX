@@ -15,6 +15,7 @@ public class Test extends ApplicationAdapter {
 	private Texture texture;
 	private BitmapFont font;
 	private GameObject gameObject1,gameObject2;
+	private float timeHelper;
 	
 	@Override
 	public void create () {
@@ -59,21 +60,26 @@ public class Test extends ApplicationAdapter {
 
     private void update() {
         if (Gdx.input.isKeyPressed(Input.Keys.A)){
-			gameObject1.x -= 10;
+			gameObject1.x -= 500 * Gdx.graphics.getDeltaTime();
         }
 		if (Gdx.input.isKeyPressed(Input.Keys.W)){
-			gameObject1.y += 10;
+			gameObject1.y += 500 * Gdx.graphics.getDeltaTime();
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.S)){
-			gameObject1.y -= 10;
+			gameObject1.y -= 500 * Gdx.graphics.getDeltaTime();
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.D)){
-			gameObject1.x += 10;
+			gameObject1.x += 500 * Gdx.graphics.getDeltaTime();
 		}
-
 		if (gameObject1.overlaps(gameObject2)){		//collision
 			Gdx.app.exit();
 		}
+
+		timeHelper += Gdx.graphics.getDeltaTime();
+		if (timeHelper > 1){
+            System.out.println("test");
+            timeHelper = 0;
+        }
 
     }
 
