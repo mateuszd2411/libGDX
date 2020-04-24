@@ -2,8 +2,8 @@ package com.mygdx.jumpGame;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
-import java.awt.Rectangle;
 
 public class Platform extends Rectangle {
 

@@ -40,7 +40,7 @@ public class JumpGame extends ApplicationAdapter {
 	    platformArray = new Array<Platform>();
 
 	    //loop for platforms
-        for (int i = 1; i < 3; i++){
+        for (int i = 1; i < 30; i++){
             Platform p = new Platform(platformTexture);
             p.x = MathUtils.random(480);
             p.y = 200 * i;
@@ -64,6 +64,7 @@ public class JumpGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.begin();
+		batch.setProjectionMatrix(camera.combined);
 		for (Platform p : platformArray){
 		    p.draw(batch);
         }
@@ -74,15 +75,39 @@ public class JumpGame extends ApplicationAdapter {
     private void update() {
         handleInput();
 
+        camera.update();
+        camera.position.set(player.x + player.width/2,player.y + 300,0);
 
+        player.y += player.jumpVelocity * Gdx.graphics.getDeltaTime();
+
+        if (player.y > 0){
+            player.jumpVelocity += gravity;
+        }else {
+            player.y = 0;
+            player.canJump = true;
+            player.jumpVelocity = 0;
+        }
+
+        //logic when player is on platform
+        for (Platform p : platformArray){
+            if (isPlayerOnPlatform(p)){
+                player.canJump = true;
+                player.jumpVelocity = 0;
+                player.y = p.y + p.height;
+            }
+        }
+    }
+
+    private boolean isPlayerOnPlatform(Platform p) {
+        return player.jumpVelocity <= 0 && player.overlaps(p) && !(player.y <= p.y);
     }
 
     private void handleInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.A)){
-            player.x -= 50 * Gdx.graphics.getDeltaTime();
+            player.x -= 500 * Gdx.graphics.getDeltaTime();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)){
-            player.x += 50 * Gdx.graphics.getDeltaTime();
+            player.x += 500 * Gdx.graphics.getDeltaTime();
         }
         if (Gdx.input.justTouched()){
             player.jump();
