@@ -9,13 +9,10 @@ public class JumpGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 
-
 	}
 
 	@Override
 	public void render () {
-
-
 
 	}
 
