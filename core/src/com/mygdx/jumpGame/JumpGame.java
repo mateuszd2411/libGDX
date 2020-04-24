@@ -18,7 +18,6 @@ public class JumpGame extends ApplicationAdapter {
 
     private void update() {
 
-
     }
 
     //clear member after close app
